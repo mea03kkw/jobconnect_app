@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}AI Assistant{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title text-center">AI Assistant Chat</h2>
+                <p class="text-muted">Ask me to create, update, or delete jobs, or get advice!</p>
+                <form method="post">
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Your Message</label>
+                        <textarea class="form-control" id="message" name="message" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send</button>
+                </form>
+                {% if response %}
+                <div class="mt-4">
+                    <h5>AI Response:</h5>
+                    <div class="alert alert-info">{{ response }}</div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

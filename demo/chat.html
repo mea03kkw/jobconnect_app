@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobConnect Demo - AI Chat</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">JobConnect Demo</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="register.html">Register</a></li>
+                    <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="employer.html">Employer Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="jobseeker.html">Job Seeker Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="apply.html">Apply/Withdraw</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="chat.html">AI Chat</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h2 class="mb-4 text-center">AI Assistant Chat</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <div id="chat-messages" class="mb-3" style="height: 400px; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
+                            <div class="message ai mb-3">
+                                <strong>AI:</strong> Hello! I'm your AI assistant for JobConnect. How can I help you today? I can help with creating jobs, editing jobs, or deleting jobs.
+                            </div>
+                            <div class="message user mb-3">
+                                <strong>You:</strong> Create a job for a marketing manager
+                            </div>
+                            <div class="message ai mb-3">
+                                <strong>AI:</strong> CREATE_JOB: Marketing Manager|Develop and execute marketing strategies|Marketing Inc|Chicago, IL|$60000
+                            </div>
+                            <div class="message user mb-3">
+                                <strong>You:</strong> Delete job ID 1
+                            </div>
+                            <div class="message ai mb-3">
+                                <strong>AI:</strong> DELETE_JOB: 1
+                            </div>
+                            <div class="message system mb-3">
+                                <em>✅ Job deleted successfully!</em>
+                            </div>
+                        </div>
+                        <form>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="message" placeholder="Type your message..." value="Edit job ID 2 to change salary" readonly>
+                                <button class="btn btn-primary" type="button" onclick="alert('Message sent!')">Send</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <h5>Demo Notes:</h5>
+                    <ul>
+                        <li>AI assistant powered by Ollama (gemma:2b model)</li>
+                        <li>Recognizes commands for creating, editing, deleting jobs</li>
+                        <li>Responds with exact command format for app processing</li>
+                        <li>Provides helpful responses for general queries</li>
+                        <li>Example commands: CREATE_JOB, EDIT_JOB, DELETE_JOB</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobConnect Demo - Employer Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar { background-color: #28a745 !important; }
+    </style>
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">JobConnect Demo</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="register.html">Register</a></li>
+                    <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="employer.html">Employer Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="jobseeker.html">Job Seeker Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="apply.html">Apply/Withdraw</a></li>
+                    <li class="nav-item"><a class="nav-link" href="chat.html">AI Chat</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <h1 class="display-4 mb-4">Employer Dashboard</h1>
+                <p class="lead mb-4">Manage your job postings and applications.</p>
+
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Post a New Job</h5>
+                        <form>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="title" class="form-label">Job Title</label>
+                                    <input type="text" class="form-control" id="title" value="Software Engineer" readonly>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="company" class="form-label">Company</label>
+                                    <input type="text" class="form-control" id="company" value="Tech Corp" readonly>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="location" class="form-label">Location</label>
+                                <input type="text" class="form-control" id="location" value="New York, NY" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Description</label>
+                                <textarea class="form-control" id="description" rows="3" readonly>We are looking for a skilled software engineer...</textarea>
+                            </div>
+                            <button type="button" class="btn btn-success" onclick="alert('Job posted successfully!')">Post Job</button>
+                        </form>
+                    </div>
+                </div>
+
+                <h4>Your Posted Jobs</h4>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Software Engineer</h5>
+                                <p class="text-muted mb-1">Job ID: 1</p>
+                                <h6 class="card-subtitle mb-2 text-muted">Tech Corp - New York, NY</h6>
+                                <p class="card-text">We are looking for a skilled software engineer...</p>
+                                <small class="text-muted">Posted on 2025-12-11</small>
+                                <div class="mt-2">
+                                    <button class="btn btn-warning btn-sm" onclick="alert('Edit job functionality')">Edit</button>
+                                    <button class="btn btn-danger btn-sm" onclick="alert('Job deleted!')">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Data Analyst</h5>
+                                <p class="text-muted mb-1">Job ID: 2</p>
+                                <h6 class="card-subtitle mb-2 text-muted">Data Inc - San Francisco, CA</h6>
+                                <p class="card-text">Join our data team...</p>
+                                <small class="text-muted">Posted on 2025-12-10</small>
+                                <div class="mt-2">
+                                    <button class="btn btn-warning btn-sm" onclick="alert('Edit job functionality')">Edit</button>
+                                    <button class="btn btn-danger btn-sm" onclick="alert('Job deleted!')">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <h5>Demo Notes:</h5>
+                    <ul>
+                        <li>Employers can post new jobs with title, company, location, description</li>
+                        <li>View all posted jobs with edit and delete options</li>
+                        <li>Job ID helps with identification for management</li>
+                        <li>Green navbar indicates employer mode</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
