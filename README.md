@@ -85,7 +85,7 @@ jobconnect_app/
 │   └── chat.html
 ├── static/                # Static assets (CSS, JS, images)
 ├── instance/              # Database files
-├── demo/                  # Static demo for GitHub Pages
+├── docs/                  # Static demo for GitHub Pages
 └── README.md
 ```
 
