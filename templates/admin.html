@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<div class="container">
+    <h2 class="mb-4">Admin Dashboard</h2>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Users</h5>
+                    <h2 class="text-primary">{{ users|length }}</h2>
+                    <small>Employers: {{ analytics.employer_count }} | Job Seekers: {{ analytics.job_seeker_count }}</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Jobs</h5>
+                    <h2 class="text-success">{{ jobs|length }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Applications</h5>
+                    <h2 class="text-info">{{ applications|length }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Avg Apps per Job</h5>
+                    <h2 class="text-warning">{% if jobs|length > 0 %}{{ "%.1f"|format(applications|length / jobs|length) }}{% else %}0{% endif %}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="mt-5">Analytics</h3>
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Jobs by Category</h4>
+            <ul class="list-group">
+                {% for category, count in analytics.job_categories.items() %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ category or 'Uncategorized' }}
+                    <span class="badge bg-primary rounded-pill">{{ count }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h4>Applications by Category</h4>
+            <ul class="list-group">
+                {% for category, count in analytics.app_categories.items() %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ category or 'Uncategorized' }}
+                    <span class="badge bg-success rounded-pill">{{ count }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <h4 class="mt-4">Top Companies by Applications</h4>
+    <ul class="list-group">
+        {% for company, count in analytics.top_companies %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{ company }}
+            <span class="badge bg-info rounded-pill">{{ count }} applications</span>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h3 class="mt-5">Users</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Email</th>
+                <th>Registered</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.role }}</td>
+                <td>{{ user.contact_email or 'N/A' }}</td>
+                <td>{{ user.id }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3 class="mt-5">Jobs</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Company</th>
+                <th>Location</th>
+                <th>Posted By</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for job in jobs %}
+            <tr>
+                <td>{{ job.id }}</td>
+                <td>{{ job.title }}</td>
+                <td>{{ job.company }}</td>
+                <td>{{ job.location }}</td>
+                <td>{{ job.user.username }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3 class="mt-5">Applications</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Job</th>
+                <th>Applicant</th>
+                <th>Date Applied</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for app in applications %}
+            <tr>
+                <td>{{ app.id }}</td>
+                <td>{{ app.job.title }}</td>
+                <td>{{ app.user.username }}</td>
+                <td>{{ app.date_applied.strftime('%Y-%m-%d %H:%M') }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

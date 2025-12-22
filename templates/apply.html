@@ -15,18 +15,26 @@
             <h5>You have already applied for this job.</h5>
             <p>Application Date: {{ existing_application.date_applied.strftime('%Y-%m-%d %H:%M:%S') }}</p>
             <p>Resume Text: {{ existing_application.resume_text or 'No resume provided' }}</p>
+            {% if existing_application.resume_file %}
+            <p>Resume File: <a href="{{ url_for('uploaded_file', filename=existing_application.resume_file) }}" target="_blank">{{ existing_application.resume_file }}</a></p>
+            {% endif %}
         </div>
         <a href="{{ url_for('withdraw_application', job_id=job.id) }}" class="btn btn-danger">Withdraw Application</a>
         <a href="{{ url_for('job_seeker_dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
     {% else %}
-        <form method="POST" class="mt-4">
-            <div class="mb-3">
-                <label for="resume_text" class="form-label">Resume/Cover Letter</label>
-                <textarea class="form-control" id="resume_text" name="resume_text" rows="10" placeholder="Enter your resume or cover letter here..."></textarea>
-            </div>
-            <button type="submit" class="btn btn-success">Submit Application</button>
-            <a href="{{ url_for('job_seeker_dashboard') }}" class="btn btn-secondary">Cancel</a>
-        </form>
-    {% endif %}
+         <form method="POST" enctype="multipart/form-data" class="mt-4">
+             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+             <div class="mb-3">
+                 <label for="resume_text" class="form-label">Resume/Cover Letter (Text)</label>
+                 <textarea class="form-control" id="resume_text" name="resume_text" rows="10" placeholder="Enter your resume or cover letter here..."></textarea>
+             </div>
+             <div class="mb-3">
+                 <label for="resume_file" class="form-label">Upload Resume File (PDF, DOC, DOCX, TXT)</label>
+                 <input type="file" class="form-control" id="resume_file" name="resume_file" accept=".pdf,.doc,.docx,.txt">
+             </div>
+             <button type="submit" class="btn btn-success">Submit Application</button>
+             <a href="{{ url_for('job_seeker_dashboard') }}" class="btn btn-secondary">Cancel</a>
+         </form>
+     {% endif %}
 </div>
 {% endblock %}

@@ -8,6 +8,7 @@
                 <h2 class="card-title text-center">AI Assistant Chat</h2>
                 <p class="text-muted">Ask me to create, update, or delete jobs, or get advice!</p>
                 <form method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     <div class="mb-3">
                         <label for="message" class="form-label">Your Message</label>
                         <textarea class="form-control" id="message" name="message" rows="3" required></textarea>

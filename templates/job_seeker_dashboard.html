@@ -6,15 +6,73 @@
 }
 </style>
 {% block content %}
-<h2 class="mb-4">Available Jobs</h2>
+<h2 class="mb-4">Find Jobs</h2>
+
+{% if recommended_jobs %}
+<div class="alert alert-info">
+    <h5>Recommended for You</h5>
+    <p>Based on your previous applications</p>
+    <div class="row">
+        {% for job in recommended_jobs %}
+        <div class="col-md-4 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h6 class="card-title">{{ job.title }}</h6>
+                    <p class="card-text">{{ job.company }} - {{ job.location }}</p>
+                    <a href="{{ url_for('apply_job', job_id=job.id) }}" class="btn btn-sm btn-success">Apply</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+<form method="GET" class="mb-4">
+    <div class="row g-3">
+        <div class="col-md-6">
+            <input type="text" class="form-control" name="q" placeholder="Search jobs..." value="{{ query }}">
+        </div>
+        <div class="col-md-2">
+            <select class="form-control" name="category">
+                <option value="">All Categories</option>
+                <option value="Technology" {% if category == 'Technology' %}selected{% endif %}>Technology</option>
+                <option value="Marketing" {% if category == 'Marketing' %}selected{% endif %}>Marketing</option>
+                <option value="Sales" {% if category == 'Sales' %}selected{% endif %}>Sales</option>
+                <option value="Finance" {% if category == 'Finance' %}selected{% endif %}>Finance</option>
+                <option value="Healthcare" {% if category == 'Healthcare' %}selected{% endif %}>Healthcare</option>
+                <option value="Education" {% if category == 'Education' %}selected{% endif %}>Education</option>
+                <option value="Other" {% if category == 'Other' %}selected{% endif %}>Other</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <input type="text" class="form-control" name="location" placeholder="Location" value="{{ location }}">
+        </div>
+        <div class="col-md-1">
+            <input type="text" class="form-control" name="salary_min" placeholder="Min $" value="{{ salary_min }}">
+        </div>
+        <div class="col-md-1">
+            <input type="text" class="form-control" name="salary_max" placeholder="Max $" value="{{ salary_max }}">
+        </div>
+    </div>
+    <div class="mt-2">
+        <button class="btn btn-primary" type="submit">Filter</button>
+        <a href="{{ url_for('job_seeker_dashboard') }}" class="btn btn-secondary">Clear Filters</a>
+    </div>
+</form>
+{% if query %}
+<h4>Search results for "{{ query }}"</h4>
+{% endif %}
 <div class="row">
-    {% for job in jobs %}
+    {% for job in jobs_pagination.items %}
     <div class="col-md-6 mb-4">
         <div class="card h-100">
             <div class="card-body">
                 <h5 class="card-title">{{ job.title }}</h5>
                 <p class="text-muted mb-1">Job ID: {{ job.id }}</p>
                 <h6 class="card-subtitle mb-2 text-muted">{{ job.company }} - {{ job.location }}</h6>
+                {% if job.category %}
+                <p class="card-text"><strong>Category:</strong> {{ job.category }}</p>
+                {% endif %}
                 {% if job.salary %}
                 <p class="card-text"><strong>Salary:</strong> {{ job.salary }}</p>
                 {% endif %}
@@ -37,4 +95,29 @@
     </div>
     {% endfor %}
 </div>
+{% if jobs_pagination.has_prev or jobs_pagination.has_next %}
+<nav aria-label="Job pagination" class="mt-4">
+    <ul class="pagination justify-content-center">
+        {% if jobs_pagination.has_prev %}
+        <li class="page-item">
+            <a class="page-link" href="{{ url_for('job_seeker_dashboard', page=jobs_pagination.prev_num, q=query) }}">Previous</a>
+        </li>
+        {% endif %}
+        {% for page_num in jobs_pagination.iter_pages() %}
+            {% if page_num %}
+                <li class="page-item {% if page_num == jobs_pagination.page %}active{% endif %}">
+                    <a class="page-link" href="{{ url_for('job_seeker_dashboard', page=page_num, q=query) }}">{{ page_num }}</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled"><span class="page-link">...</span></li>
+            {% endif %}
+        {% endfor %}
+        {% if jobs_pagination.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="{{ url_for('job_seeker_dashboard', page=jobs_pagination.next_num, q=query) }}">Next</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
 {% endblock %}

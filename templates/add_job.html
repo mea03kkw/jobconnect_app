@@ -7,6 +7,7 @@
             <div class="card-body">
                 <h2 class="card-title text-center">Post a New Job</h2>
                 <form method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     <div class="mb-3">
                         <label for="title" class="form-label">Job Title</label>
                         <input type="text" class="form-control" id="title" name="title" required>
@@ -26,6 +27,19 @@
                     <div class="mb-3">
                         <label for="salary" class="form-label">Salary (optional)</label>
                         <input type="text" class="form-control" id="salary" name="salary">
+                    </div>
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category</label>
+                        <select class="form-control" id="category" name="category">
+                            <option value="">Select Category</option>
+                            <option value="Technology">Technology</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Sales">Sales</option>
+                            <option value="Finance">Finance</option>
+                            <option value="Healthcare">Healthcare</option>
+                            <option value="Education">Education</option>
+                            <option value="Other">Other</option>
+                        </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Post Job</button>
                     <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancel</a>

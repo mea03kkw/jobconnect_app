@@ -7,6 +7,7 @@
             <div class="card-body">
                 <h2 class="card-title text-center">Edit Job</h2>
                 <form method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     <div class="mb-3">
                         <label for="title" class="form-label">Job Title</label>
                         <input type="text" class="form-control" id="title" name="title" value="{{ job.title }}" required>
@@ -26,6 +27,19 @@
                     <div class="mb-3">
                         <label for="salary" class="form-label">Salary (optional)</label>
                         <input type="text" class="form-control" id="salary" name="salary" value="{{ job.salary }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category</label>
+                        <select class="form-control" id="category" name="category">
+                            <option value="">Select Category</option>
+                            <option value="Technology" {% if job.category == 'Technology' %}selected{% endif %}>Technology</option>
+                            <option value="Marketing" {% if job.category == 'Marketing' %}selected{% endif %}>Marketing</option>
+                            <option value="Sales" {% if job.category == 'Sales' %}selected{% endif %}>Sales</option>
+                            <option value="Finance" {% if job.category == 'Finance' %}selected{% endif %}>Finance</option>
+                            <option value="Healthcare" {% if job.category == 'Healthcare' %}selected{% endif %}>Healthcare</option>
+                            <option value="Education" {% if job.category == 'Education' %}selected{% endif %}>Education</option>
+                            <option value="Other" {% if job.category == 'Other' %}selected{% endif %}>Other</option>
+                        </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Update Job</button>
                     <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancel</a>
