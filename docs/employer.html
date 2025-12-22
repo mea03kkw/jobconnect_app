@@ -31,70 +31,84 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-8 mx-auto">
-                <h1 class="display-4 mb-4">Employer Dashboard</h1>
-                <p class="lead mb-4">Manage your job postings and applications.</p>
-
-                <div class="card mb-4">
+            <div class="col-md-8 mx-auto text-center">
+                <h1 class="display-4 mb-4">Welcome to JobConnect</h1>
+                <p class="lead mb-4">Connect employers with talented professionals through our intelligent job board platform.</p>
+                
+                <div class="row mt-5">
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">👔 For Employers</h5>
+                                <p class="card-text">Post jobs, manage applications, and find the perfect candidates with AI assistance.</p>
+                                <a href="employer.html" class="btn btn-primary">Post a Job</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">🔍 For Job Seekers</h5>
+                                <p class="card-text">Browse opportunities, apply with one click, and get AI-powered career guidance.</p>
+                                <a href="jobseeker.html" class="btn btn-success">Find Jobs</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mt-4">
                     <div class="card-body">
-                        <h5 class="card-title">Post a New Job</h5>
-                        <form>
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="title" class="form-label">Job Title</label>
-                                    <input type="text" class="form-control" id="title" value="Software Engineer" readonly>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="company" class="form-label">Company</label>
-                                    <input type="text" class="form-control" id="company" value="Tech Corp" readonly>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="location" class="form-label">Location</label>
-                                <input type="text" class="form-control" id="location" value="New York, NY" readonly>
-                            </div>
-                            <div class="mb-3">
-                                <label for="description" class="form-label">Description</label>
-                                <textarea class="form-control" id="description" rows="3" readonly>We are looking for a skilled software engineer...</textarea>
-                            </div>
-                            <button type="button" class="btn btn-success" onclick="alert('Job posted successfully!')">Post Job</button>
-                        </form>
+                        <h5 class="card-title">🤖 AI Assistant Feature</h5>
+                        <p class="card-text">Our Ollama-powered AI helps with job post creation, resume tips, and career advice.</p>
+                        <a href="chat.html" class="btn btn-outline-primary">Try AI Assistant</a>
                     </div>
                 </div>
+                
+                <div class="mt-5">
+                    <h4>Your Posted Jobs</h4>
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Software Engineer</h5>
+                                    <p class="text-muted mb-1">Job ID: 1</p>
+                                    <h6 class="card-subtitle mb-2 text-muted">Tech Corp - New York, NY</h6>
+                                    <p class="card-text">We are looking for a skilled software engineer...</p>
+                                    <small class="text-muted">Posted on 2025-12-11</small>
+                                    <div class="mt-2">
+                                        <a href="#" class="btn btn-warning btn-sm" onclick="alert('Edit job functionality')">Edit</a>
+                                        <a href="#" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Data Analyst</h5>
+                                    <p class="text-muted mb-1">Job ID: 2</p>
+                                    <h6 class="card-subtitle mb-2 text-muted">Data Inc - San Francisco, CA</h6>
+                                    <p class="card-text">Join our data team...</p>
+                                    <small class="text-muted">Posted on 2025-12-10</small>
+                                    <div class="mt-2">
+                                        <a href="#" class="btn btn-warning btn-sm" onclick="alert('Edit job functionality')">Edit</a>
+                                        <a href="#" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                <h4>Your Posted Jobs</h4>
-                <div class="row">
-                    <div class="col-md-6 mb-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Software Engineer</h5>
-                                <p class="text-muted mb-1">Job ID: 1</p>
-                                <h6 class="card-subtitle mb-2 text-muted">Tech Corp - New York, NY</h6>
-                                <p class="card-text">We are looking for a skilled software engineer...</p>
-                                <small class="text-muted">Posted on 2025-12-11</small>
-                                <div class="mt-2">
-                                    <button class="btn btn-warning btn-sm" onclick="alert('Edit job functionality')">Edit</button>
-                                    <button class="btn btn-danger btn-sm" onclick="alert('Job deleted!')">Delete</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 mb-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Data Analyst</h5>
-                                <p class="text-muted mb-1">Job ID: 2</p>
-                                <h6 class="card-subtitle mb-2 text-muted">Data Inc - San Francisco, CA</h6>
-                                <p class="card-text">Join our data team...</p>
-                                <small class="text-muted">Posted on 2025-12-10</small>
-                                <div class="mt-2">
-                                    <button class="btn btn-warning btn-sm" onclick="alert('Edit job functionality')">Edit</button>
-                                    <button class="btn btn-danger btn-sm" onclick="alert('Job deleted!')">Delete</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <footer class="mt-5 py-4 bg-dark text-white text-center">
+        <div class="container">
+            <p>JobConnect • Full-Stack Project • <a href="#" class="text-light">GitHub Repository</a></p>
+            <p class="mb-0">Connect employers with talented professionals.</p>
+        </div>
+    </footer>
 
                 <div class="mt-4">
                     <h5>Demo Notes:</h5>

@@ -26,40 +26,30 @@
         </div>
     </nav>
 
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <h2 class="mb-4 text-center">AI Assistant Chat</h2>
-                <div class="card">
-                    <div class="card-body">
-                        <div id="chat-messages" class="mb-3" style="height: 400px; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
-                            <div class="message ai mb-3">
-                                <strong>AI:</strong> Hello! I'm your AI assistant for JobConnect. How can I help you today? I can help with creating jobs, editing jobs, or deleting jobs.
-                            </div>
-                            <div class="message user mb-3">
-                                <strong>You:</strong> Create a job for a marketing manager
-                            </div>
-                            <div class="message ai mb-3">
-                                <strong>AI:</strong> CREATE_JOB: Marketing Manager|Develop and execute marketing strategies|Marketing Inc|Chicago, IL|$60000
-                            </div>
-                            <div class="message user mb-3">
-                                <strong>You:</strong> Delete job ID 1
-                            </div>
-                            <div class="message ai mb-3">
-                                <strong>AI:</strong> DELETE_JOB: 1
-                            </div>
-                            <div class="message system mb-3">
-                                <em>✅ Job deleted successfully!</em>
-                            </div>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title text-center">AI Assistant Chat</h2>
+                    <p class="text-muted">Ask me to create, update, or delete jobs, or get advice!</p>
+                    <form>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Your Message</label>
+                            <textarea class="form-control" id="message" name="message" rows="3" required></textarea>
                         </div>
-                        <form>
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="message" placeholder="Type your message..." value="Edit job ID 2 to change salary" readonly>
-                                <button class="btn btn-primary" type="button" onclick="alert('Message sent!')">Send</button>
-                            </div>
-                        </form>
-                    </div>
+                        <button type="submit" class="btn btn-primary">Send</button>
+                    </form>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="mt-5 py-4 bg-dark text-white text-center">
+        <div class="container">
+            <p>JobConnect • Full-Stack Project • <a href="#" class="text-light">GitHub Repository</a></p>
+            <p class="mb-0">Connect employers with talented professionals.</p>
+        </div>
+    </footer>
 
                 <div class="mt-4">
                     <h5>Demo Notes:</h5>
