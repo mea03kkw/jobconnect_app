@@ -1,9 +1,9 @@
+# Modified to remove mail
 from flask import Flask, render_template, request, redirect, url_for, session, flash, send_from_directory
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from functools import wraps
 from flask_wtf import CSRFProtect
-from flask_mail import Mail, Message
 from models import db, User, Job, Application
 import requests
 import re
@@ -25,14 +25,6 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.makedirs(app.config['UPLOAD_FOLDER'])
 db.init_app(app)
 csrf = CSRFProtect(app)
-mail = Mail(app)
-
-# Mail configuration (for demo, using console backend)
-app.config['MAIL_SERVER'] = 'localhost'
-app.config['MAIL_PORT'] = 25
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = False
-app.config['MAIL_DEFAULT_SENDER'] = 'noreply@jobconnect.com'
 
 with app.app_context():
     db.create_all()
@@ -230,13 +222,7 @@ def apply_job(job_id):
         db.session.add(application)
         db.session.commit()
 
-        # Email notification (logged for demo)
-        employer = job.user
-        if employer.contact_email:
-            logging.info(f"Application notification: New application for '{job.title}' from user {session['user_id']} to {employer.contact_email}")
-            flash("Application submitted and employer notified!")
-        else:
-            flash("Application submitted successfully!")
+        flash("Application submitted successfully!")
 
         return redirect(url_for("job_seeker_dashboard"))
     return render_template("apply.html", job=job, existing_application=existing)
