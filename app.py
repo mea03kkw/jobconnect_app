@@ -10,10 +10,11 @@ import logging
 import os
 
 def check_ollama():
+    """Check if Ollama service is running by attempting to connect to localhost:11434."""
     try:
         response = requests.get("http://localhost:11434/api/tags", timeout=5)
         return response.status_code == 200
-    except:
+    except Exception:
         return False
 
 app = Flask(__name__)
@@ -29,10 +30,12 @@ with app.app_context():
     db.create_all()
 
 def allowed_file(filename):
+    """Check if the file extension is allowed for uploads."""
     ALLOWED_EXTENSIONS = {'pdf', 'doc', 'docx', 'txt'}
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def login_required(f):
+    """Decorator to require user login for a route."""
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if "user_id" not in session:
@@ -42,6 +45,7 @@ def login_required(f):
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    """Handle user registration form submission and account creation."""
     if request.method == "POST":
         username = request.form["username"].strip()
         password = request.form["password"]
@@ -65,6 +69,7 @@ def register():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    """Handle user login form submission and authentication."""
     if request.method == "POST":
         username = request.form["username"].strip()
         password = request.form["password"]
@@ -82,13 +87,15 @@ def login():
 
 @app.route("/logout")
 def logout():
+    """Log out the current user by clearing the session."""
     session.pop("user_id", None)
     return redirect(url_for("login"))
 
 @app.route("/profile", methods=["GET", "POST"])
 @login_required
 def profile():
-    user = db.session.get(User, session["user_id"])
+    """Display and update user profile information."""
+    user = db.get_or_404(User, session["user_id"])
     if request.method == "POST":
         user.bio = request.form.get("bio", "")
         user.contact_email = request.form.get("contact_email", "")
@@ -102,12 +109,14 @@ def profile():
 @app.route('/uploads/<filename>')
 @login_required
 def uploaded_file(filename):
+    """Serve uploaded files securely."""
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 @app.route("/admin")
 @login_required
 def admin_dashboard():
-    user = db.session.get(User, session["user_id"])
+    """Display admin dashboard with user, job, and application analytics."""
+    user = db.get_or_404(User, session["user_id"])
     if user.username != 'admin':
         return redirect(url_for('index'))
     users = User.query.all()
@@ -134,12 +143,14 @@ def admin_dashboard():
 
 @app.route("/")
 def index():
+    """Render the home page."""
     return render_template("index.html")
 
 @app.route("/employer_dashboard")
 @login_required
 def employer_dashboard():
-    user = db.session.get(User, session["user_id"])
+    """Display the employer's job dashboard."""
+    user = db.get_or_404(User, session["user_id"])
     if not user:
         return redirect(url_for("login"))
     jobs = Job.query.filter_by(user_id=user.id).order_by(Job.date_posted.desc()).all()
@@ -147,6 +158,7 @@ def employer_dashboard():
 
 @app.route("/job_seeker_dashboard")
 def job_seeker_dashboard():
+    """Display job listings with search and pagination for job seekers."""
     page = request.args.get('page', 1, type=int)
     query = request.args.get('q', '').strip()
     category = request.args.get('category', '').strip()
@@ -169,13 +181,13 @@ def job_seeker_dashboard():
         try:
             min_val = int(salary_min.replace('$', '').replace(',', '').split('-')[0].strip())
             job_query = job_query.filter(Job.salary.contains(str(min_val)))
-        except:
+        except Exception:
             pass
     if salary_max:
         try:
             max_val = int(salary_max.replace('$', '').replace(',', '').split('-')[-1].strip())
             job_query = job_query.filter(Job.salary.contains(str(max_val)))
-        except:
+        except Exception:
             pass
 
     jobs_pagination = job_query.paginate(page=page, per_page=10, error_out=False)
@@ -202,6 +214,7 @@ def job_seeker_dashboard():
 @app.route("/apply/<int:job_id>", methods=["GET", "POST"])
 @login_required
 def apply_job(job_id):
+    """Handle job application submission."""
     job = Job.query.get_or_404(job_id)
     # Check if already applied
     existing = Application.query.filter_by(user_id=session["user_id"], job_id=job_id).first()
@@ -229,6 +242,7 @@ def apply_job(job_id):
 @app.route("/withdraw/<int:job_id>")
 @login_required
 def withdraw_application(job_id):
+    """Withdraw a job application."""
     application = Application.query.filter_by(user_id=session["user_id"], job_id=job_id).first()
     if not application:
         flash("You have not applied for this job.")
@@ -241,6 +255,7 @@ def withdraw_application(job_id):
 @app.route("/add_job", methods=["GET", "POST"])
 @login_required
 def add_job():
+    """Handle adding a new job posting."""
     if request.method == "POST":
         title = request.form["title"]
         description = request.form.get("description", "")
@@ -252,7 +267,7 @@ def add_job():
         job = Job(title=title, description=description, company=company, location=location, salary=salary, category=category, user_id=user_id)
         db.session.add(job)
         # Set role to employer
-        user = db.session.get(User, user_id)
+        user = db.get_or_404(User, user_id)
         user.role = 'employer'
         db.session.commit()
         return redirect(url_for("employer_dashboard"))
@@ -261,6 +276,7 @@ def add_job():
 @app.route("/edit_job/<int:id>", methods=["GET", "POST"])
 @login_required
 def edit_job(id):
+    """Edit an existing job posting."""
     job = Job.query.get_or_404(id)
     if job.user_id != session["user_id"]:
         return redirect(url_for("index"))
@@ -278,6 +294,7 @@ def edit_job(id):
 @app.route("/delete_job/<int:id>")
 @login_required
 def delete_job(id):
+    """Delete a job posting."""
     job = Job.query.get_or_404(id)
     if job.user_id != session["user_id"]:
         return redirect(url_for("index"))
@@ -288,6 +305,7 @@ def delete_job(id):
 @app.route("/chat", methods=["GET", "POST"])
 @login_required
 def chat():
+    """Handle AI chat interactions for job management."""
     response = None
     if request.method == "POST":
         message = request.form["message"]
