@@ -1,4 +1,4 @@
-instance/
+job.db
 __pycache__/
 *.pyc
 *.pyo

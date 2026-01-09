@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
-[![Flask](https://img.shields.io/badge/Flask-2.0+-red.svg)](https://flask.palletsprojects.com/)
+[![Flask](https://img.shields.io/badge/Flask-3.0+-red.svg)](https://flask.palletsprojects.com/)
 
 A comprehensive full-stack job board application built with Flask, SQLAlchemy, and integrated AI assistance for seamless job management and career guidance.
 
@@ -61,36 +61,30 @@ git clone https://github.com/mea03kkw/jobconnect_app.git
 cd jobconnect_app
 ```
 
-### 2. Create Virtual Environment (Recommended)
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
-
-### 3. Install Dependencies
+### 2. Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Set Up AI Features (Optional)
+### 3. Set Up AI Features (Optional)
 ```bash
 # Download and install Ollama from https://ollama.ai
 ollama pull gemma:2b
 ollama serve
 ```
 
-### 5. Initialize Database
+### 4. Initialize Database
 ```bash
 python app.py
 ```
 The database will be automatically created on first run.
 
-### 6. Run the Application
+### 5. Run the Application
 ```bash
 python app.py
 ```
 
-### 7. Access the Application
+### 6. Access the Application
 Open your browser and navigate to: `http://localhost:5000`
 
 ## 📁 Project Structure
@@ -121,7 +115,7 @@ jobconnect_app/
 │   └── images/          # Image assets
 ├── uploads/             # User uploaded files (resumes)
 ├── docs/                # Static demo files for GitHub Pages
-└── instance/            # SQLite database files
+└── job.db               # SQLite database file
 ```
 
 ## 🎯 Usage Guide
@@ -152,15 +146,6 @@ Experience the application with mock data: [JobConnect Demo](https://mea03kkw.gi
 
 ## 🔧 Configuration
 
-### Environment Variables
-Create a `.env` file in the root directory:
-
-```env
-SECRET_KEY=your-secret-key-here
-DATABASE_URL=sqlite:///instance/job.db
-OLLAMA_BASE_URL=http://localhost:11434
-FLASK_ENV=development
-```
 
 ### Database Migration
 For production deployments, consider using Flask-Migrate for database versioning.
