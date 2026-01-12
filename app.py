@@ -17,13 +17,20 @@ def check_ollama():
     except Exception:
         return False
 
+# Create the Flask application instance
 app = Flask(__name__)
+# Set the secret key for session security and CSRF protection; defaults to a placeholder if not set via environment variable
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "your_secret_key")
+# Configure the database URI; uses environment variable or defaults to SQLite for development
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///job.db")
+# Define the folder for file uploads
 app.config['UPLOAD_FOLDER'] = 'uploads'
+# Ensure the upload folder exists; create it if it doesn't
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.makedirs(app.config['UPLOAD_FOLDER'])
+# Initialize the SQLAlchemy database with the Flask app
 db.init_app(app)
+# Initialize CSRF protection for forms
 csrf = CSRFProtect(app)
 
 with app.app_context():
